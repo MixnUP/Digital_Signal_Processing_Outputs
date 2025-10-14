@@ -37,7 +37,7 @@ The analysis of Electroencephalogram (EEG) signals has emerged as a significant 
 
 There has been a considerable convergence of Digital Signal Processing (DSP) and Machine Learning (ML) to decode these signals for a variety of applications, Traditional pipelines have relied on band-limited preprocessing and handcrafted features, but their sensitivity to artifacts, subject variability, and non-stationarity often limits generalization across individuals and recording sessions \cite{b3}, [6], [8] 
 
- We are observing a clear trend where DSP-based feature extraction is not a separate preliminary step but is instead intricately woven into the architecture of advanced models. This includes converting 1D EEG signals into 2D time-frequency representations for analysis with Convolutional Neural Networks (CNNs), and developing powerful hybrid systems that combine CNNs with Long Short-Term Memory (LSTM) networks or Support Vector Machines (SVMs) to learn from the complex spatio-temporal structure of EEG data \cite{b2, b4}. This review paper aims to provide a comprehensive overview of these recent advancements. We will explore the dominant DSP pipelines, analyze the performance of various ML classifiers, and discuss the persistent challenges that need to be addressed to build more reliable and efficient EEG-based emotion recognition systems.
+ We are observing a clear trend where DSP-based feature extraction is not a separate preliminary step but is instead intricately woven into the architecture of advanced models. This includes the usage of Wavelet Convolutional Neural Network (WCNN) and Support Vector Machine (SVM) [1] where it basically converts electroencephalography windows into continuous wavelet transform scalograms. This approach also uses several references where it uses explicit time–frequency images plus a convolutional neural network feature extractor and finishes with a classical margin-based classifier. [6][8]
 
 \section{Methodology}
 The intellectual challenge of decoding emotions from EEG signals lies not in a single algorithm, but in the thoughtful construction of a multi-stage processing pipeline. This section dissects this symbiotic relationship.
@@ -72,7 +72,7 @@ To distill the diverse strategies into a coherent overview, this section present
 \textbf{Ref.} & \textbf{Approach} & \textbf{Similarities} \\
 \hline
 \textbf{\cite{b1}, \cite{b2}}
-& Signal-to-Image Transformation
+& Wavelet Convolutional Neural Networks and Support Vector
 & Both studies convert 1D EEG signals into 2D image-like representations (scalograms or topographic maps) to leverage powerful CNN architectures from computer vision. \\[1mm]
 \textbf{\cite{b1}, \cite{b2}}
 & Hybrid Model Architectures
@@ -124,7 +124,6 @@ To distill the diverse strategies into a coherent overview, this section present
 \end{table}
 
 The analysis across these studies reveals several key trends. As highlighted in Table \ref{tab:method_similarities}, a shared reliance on sophisticated feature representation and hybrid models emerges as a common thread, despite the surface-level differences in approach. Methodologies like signal-to-image transformation and engineered feature extraction are central to improving performance. Table \ref{tab:summary_journal} further details this landscape, showing a clear divergence in strategies: some researchers focus on transforming signals into images to leverage powerful vision models, while others pursue meticulously handcrafted features or develop highly specialized network architectures. The emergence of novel paradigms like Spiking Neural Networks (SNNs) \cite{b5} further indicates a field that is not only refining existing methods but also actively exploring fundamentally new ways of processing neural data. This dynamic landscape, centered on the synergy between DSP and ML, underscores the ongoing quest for a definitive solution to the complex challenge of EEG-based emotion recognition.
-
 
 
 \section{Challenges and Issues}
