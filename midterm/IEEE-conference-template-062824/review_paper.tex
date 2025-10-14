@@ -57,7 +57,7 @@ W_{(a,b)}[x(t)] = \frac{1}{|a|^{1/2}} \int_{-\infty}^{+\infty} x(t)\,\varphi^{*}
 
 where \(a\) is the scale (a real and positive value), \(b\) is the translational parameter (a real number), and \(\varphi\) denotes the mother wavelet, which localizes the signal in both time and frequency domains.
 
-This image representation of EEG power changes in time and frequency effectively captures the transient, non-stationary nature of neural oscillations. \cite{b1} offers a compelling demonstration of this, employing the CWT to generate scalograms. These 2D images allow researchers to leverage the immense power of pre-trained Convolutional Neural Networks (CNNs). In the study, the deep features learned by a pre-trained ResNet-18 from the CWT scalograms were subsequently fed into a Multiclass Support Vector Machine (MSVM). This hybrid strategy, which separates the task of feature representation from classification, significantly boosted performance on the MAHNOB-HCI dataset.
+This image representation of EEG power changes in time and frequency effectively captures the transient, non-stationary nature of neural oscillations. \cite{b1} offers a compelling demonstration of this, employing the CWT to generate scalograms. These 2D images allow researchers to leverage the immense power of pre-trained Convolutional Neural Networks (CNNs) \cite{b1}. In the study, the deep features learned by a pre-trained ResNet-18 from the CWT scalograms were subsequently fed into a Multiclass Support Vector Machine (MSVM) \cite{b1}. This hybrid strategy, which separates the task of feature representation from classification, significantly boosted performance on the MAHNOB-HCI dataset.
 
 Four pre-trained CNNs were evaluated using three performance measures—accuracy, precision, and recall—through the leave-one-subject-out cross-validation (LOSO-CV) approach. In this approach, data from 31 subjects were used to fine-tune existing CNNs, while data from another subject were used as the test set. This ensures subject independence, as no samples from a single subject appear in both the training and testing sets. The process repeats until all subjects have been tested once, and the final reported results are the mean and standard deviation across all iterations.
 
@@ -88,7 +88,7 @@ Another powerful approach involves creating hybrid architectures that combine di
     \label{fig:eeg_flow}
 \end{figure}
 
-The general EEG-based emotion identification process begins with data acquisition and preprocessing, as shown in Figure~\ref{fig:eeg_flow}. EEG data are collected and normalized to ensure consistency across sessions and subjects. Noise and artifacts are then mitigated using band-pass filters, typically in the range of 1–75 Hz, to preserve relevant frequency components. After preprocessing, the signals are transformed into structured representations such as Mel Frequency Cepstral Coefficients (MFCCs), entropy parameters, or topographic feature maps. These representations serve as the input to the hybrid CNN-LSTM network, which learns spatial features through convolutional layers and temporal dependencies through recurrent layers. This combined approach enhances the model’s ability to recognize emotion-related EEG patterns and classify them accurately.
+The general EEG-based emotion identification process begins with data acquisition and preprocessing, as shown in Figure~\ref{fig:eeg_flow}. EEG data are collected and normalized to ensure consistency across sessions and subjects. Noise and artifacts are then mitigated using band-pass filters, typically in the range of 1–75 Hz, to preserve relevant frequency components. After preprocessing, the signals are transformed into structured representations such as Mel Frequency Cepstral Coefficients (MFCCs) \cite{b2}, entropy parameters, or topographic feature maps. These representations serve as the input to the hybrid CNN-LSTM network, which learns spatial features through convolutional layers and temporal dependencies through recurrent layers. This combined approach enhances the model’s ability to recognize emotion-related EEG patterns and classify them accurately.
 
 \begin{figure}[H]
     \centering
@@ -112,9 +112,9 @@ In EEG-based emotion and mental state recognition, one emerging approach focuses
     \label{fig:mfb_cnn_pipeline}
 \end{figure}
 
-A particularly salient feature in this domain is entropy, which quantifies the signal’s complexity. \cite{b3} explored how various entropy-based measures—including Differential Entropy (DE), Sample Entropy (SampEn), and Approximate Entropy (ApEn)—can serve as potent indicators of emotional states. These handcrafted features are then classified using traditional machine learning models such as SVM, k-NN, and Decision Trees.
+A particularly salient feature in this domain is entropy, which quantifies the signal’s complexity. \cite{b3} explored how various entropy-based measures—including Differential Entropy (DE), Sample Entropy (SampEn), and Approximate Entropy (ApEn) \cite{b3}—can serve as potent indicators of emotional states. These handcrafted features are then classified using traditional machine learning models such as SVM, k-NN, and Decision Trees.
 
-Building upon this foundation, \cite{b4} proposed the Multiple Feature Block-based Convolutional Neural Network (MFB-CNN), a hybrid model designed to decode mental states in high-interference environments such as simulated flight. Because EEG data in such settings are susceptible to motion artifacts, preprocessing plays a vital role. Artifacts were removed using Independent Component Analysis (ICA), where four EOG channels were designated as contamination references. Signal processing and experimental control were implemented using MATLAB 2019a with the BBCI toolbox.
+Building upon this foundation, \cite{b4} proposed the Multiple Feature Block-based Convolutional Neural Network (MFB-CNN), a hybrid model designed to decode mental states in high-interference environments such as simulated flight. Because EEG data in such settings are susceptible to motion artifacts, preprocessing plays a vital role. Artifacts were removed using Independent Component Analysis (ICA) \cite{b4}, where four EOG channels were designated as contamination references. Signal processing and experimental control were implemented using MATLAB 2019a with the BBCI toolbox.
 
 After preprocessing, the EEG dataset consisted of all recorded channels and sampling points (300 × 300) as input matrices. The MFB-CNN was structured into seven convolutional blocks organized hierarchically to enable progressive feature abstraction. Each convolutional block contained four convolutional layers and one batch-normalization layer with a filter size of 32. Temporal feature extraction used filter sizes of 1 × 5, while spatial feature extraction in later blocks used 3 × 1 filters to capture inter-channel dependencies. Dropout layers with a rate of 0.5 were applied to prevent overfitting, and max- and average-pooling layers reduced redundant information while retaining essential activation patterns.
 
@@ -132,7 +132,7 @@ For model training, the network was iteratively trained over 30 epochs, and clas
 
 
 \subsection{Spiking Neural Networks}
-Venturing beyond conventional deep learning, some researchers are exploring neuromorphic approaches that emulate biological neural behavior more closely. Spiking Neural Networks (SNNs) operate on event-driven computations, processing information as discrete spikes rather than continuous activations. This time-based mechanism enables SNNs to capture temporal dependencies within EEG signals efficiently while consuming significantly less power—making them ideal for real-time emotion recognition and wearable applications.
+Venturing beyond conventional deep learning, some researchers are exploring neuromorphic approaches that emulate biological neural behavior more closely. Spiking Neural Networks (SNNs) \cite{b5} operate on event-driven computations, processing information as discrete spikes rather than continuous activations. This time-based mechanism enables SNNs to capture temporal dependencies within EEG signals efficiently while consuming significantly less power—making them ideal for real-time emotion recognition and wearable applications.
 
 \begin{figure}[H]
     \centering
@@ -150,7 +150,7 @@ Feature extraction then integrates both time-domain and frequency-domain analyse
 v_{\xi} = \frac{1}{T} \sum_{t=1}^{T} [\xi(t) - \mu_{\xi}]^2
 \end{equation}
 
-In the frequency domain, the Fast Fourier Transform (FFT) and Discrete Wavelet Transform (DWT) are applied to extract oscillatory and transient features. The DFT of the EEG signal \( \xi(t) \) is expressed as:
+In the frequency domain, the Fast Fourier Transform (FFT) and Discrete Wavelet Transform (DWT) \cite{b5} are applied to extract oscillatory and transient features. The DFT of the EEG signal \( \xi(t) \) is expressed as:
 
 \begin{equation}
 \xi(k) = DFT[\xi(t)] = \sum_{t=0}^{N-1} \xi(t) W_N^{tk}, \quad W_N^k = e^{-j \frac{2\pi k}{N}}
@@ -165,7 +165,7 @@ W(a,b) = \frac{1}{\sqrt{|a|}} \int s(t) \psi^* \left( \frac{t - b}{a} \right) dt
 
 where \(a\) and \(b\) represent the scaling and translation parameters, and \(\psi(t)\) is the mother wavelet, often the “db4” wavelet for EEG applications.
 
-After these transformations, features are spike-encoded, converting continuous amplitude information into discrete spike trains. These spike patterns are then used as input to a spiking network, where temporal learning mechanisms such as Spike-Timing-Dependent Plasticity (STDP) dynamically adjust synaptic weights according to spike timing differences.
+After these transformations, features are spike-encoded, converting continuous amplitude information into discrete spike trains. These spike patterns are then used as input to a spiking network, where temporal learning mechanisms such as Spike-Timing-Dependent Plasticity (STDP) \cite{b5} dynamically adjust synaptic weights according to spike timing differences.
 
 \begin{figure}[H]
     \centering
