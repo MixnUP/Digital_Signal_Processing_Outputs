@@ -9,6 +9,8 @@
 \usepackage{graphicx}
 \usepackage{textcomp}
 \usepackage{xcolor}
+\usepackage{placeins}
+
 \def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
     T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
 \begin{document}
@@ -71,15 +73,21 @@ To distill the diverse strategies into a coherent overview, this section present
 \hline
 \textbf{Ref.} & \textbf{Approach} & \textbf{Similarities} \\
 \hline
-\textbf{\cite{b1}, \cite{b2}}
-& Wavelet Convolutional Neural Networks and Support Vector
-& Both studies convert 1D EEG signals into 2D image-like representations (scalograms or topographic maps) to leverage powerful CNN architectures from computer vision. \\[1mm]
-\textbf{\cite{b1}, \cite{b2}}
-& Hybrid Model Architectures
+\textbf{\cite{b1}}
+& Wavelet Convolutional Neural Networks and Support Vector Machine
+& The usage of wavelet convolutional neural networks along with support vector machines plays a fairly crucial role in this study as it provides a way to convert electroencephalography windows into continuous wavelet transform scalograms, which is proven necessary for further research due to the usage of convolutional neural networks \\[1mm]
+\textbf{\cite{b2}}
+& Hybrid CNN and LSTM Classification
 & Both employ hybrid models (CNN+SVM or CNN+LSTM) to capitalize on the strengths of different architectures for feature extraction and classification. \\[1mm]
-\textbf{\cite{b3}, \cite{b4}}
-& Engineered Feature Extraction
-& Both studies rely on meticulously crafting features (entropy measures or multi-block features) to quantify specific signal characteristics, rather than using end-to-end deep learning. \\
+\textbf{\cite{b3}}
+& Entropy as a Feature Extraction Measure
+& Both studies rely on meticulously crafting features (entropy measures or multi-block features) to quantify specific signal characteristics, rather than using end-to-end deep learning. \\[1mm]
+\textbf{\cite{b4}}
+& Multiple Feature Block-Based Convolutional Neural Network
+& Both employ hybrid models (CNN+SVM or CNN+LSTM) to capitalize on the strengths of different architectures for feature extraction and classification. \\[1mm]
+\textbf{\cite{b5}}
+& Usage of Spiking Neural Networks
+& Both employ hybrid models (CNN+SVM or CNN+LSTM) to capitalize on the strengths of different architectures for feature extraction and classification. \\[1mm]
 \hline
 \end{tabular}
 \end{table}
@@ -87,33 +95,34 @@ To distill the diverse strategies into a coherent overview, this section present
 \begin{table}[htbp]
     \caption{Summary of Reviewed Journal Papers}
     \centering
-    \renewcommand{\arraystretch}{1.5}
+    \renewcommand{\arraystretch}{2}
+    \large
     \resizebox{\columnwidth}{!}{
-    \begin{tabular}{p{2.5cm} p{4cm} p{4cm} p{4cm}} 
+    \begin{tabular}{p{3cm} p{2.5cm} p{5cm} p{4cm}} 
         \hline
-        \textbf{Author(s)} & \textbf{Focus} & \textbf{Methodology} & \textbf{Key Findings / Performance} \\
+        \textbf{Paper Title} & \textbf{Focus} & \textbf{Methodology} & \textbf{Key Findings / Performance} \\
         \hline
-        Bagherzadeh et al. (2023) \cite{b1}
+        A Hybrid EEG-Based Emotion Recognition Approach Using Wavelet Convolutional Neural Networks and Support Vector Machine \cite{b1}
         & Emotion recognition on DEAP and MAHNOB-HCI datasets using a hybrid computer vision approach.
         & EEG signals are converted to 2D scalograms using CWT. A pre-trained ResNet-18 extracts features, which are then classified by a Multiclass SVM.
         & The hybrid CNN-SVM model significantly boosted classification performance, demonstrating the power of transfer learning from the visual domain. \\
         
-        Xu et al. (2022) \cite{b2}
+        EEG-based emotion recognition using hybrid CNN and LSTM networks \cite{b2}
         & High-accuracy emotion recognition (happiness, sadness, fear, disgust) on the SEED-V dataset.
         & Extracts MFCC and entropy features, which are projected onto 2D topographic maps. A hybrid CNN-LSTM architecture with a ResNet-152 backbone classifies the spatio-temporal data.
         & Achieved a state-of-the-art accuracy of 98\%, highlighting the strength of combining spatial and temporal feature learning. \\
         
-        Al-Nafjan et al. (2021) \cite{b3}
+        EEG-based human emotion recognition using entropy as a feature extraction measure \cite{b3}
         & Investigating the efficacy of various entropy-based features for emotion recognition.
         & Extracts a suite of entropy measures (e.g., Sample Entropy, Approximate Entropy, Differential Entropy) and uses traditional ML models (SVM, k-NN, Decision Tree) for classification.
         & Confirmed that entropy features are potent and reliable indicators for distinguishing between different emotional states. \\
         
-        Zhang et al. (2021) \cite{b4}
+        Continuous EEG Decoding of Pilots’ Mental States Using Multiple Feature Block-Based Convolutional Neural Network \cite{b4}
         & Continuous decoding of pilot mental states (fatigue, workload, distraction) in a simulated flight environment.
         & A custom Multiple Feature Block-based CNN (MFB-CNN) processes distinct blocks of features from the time and frequency domains of the EEG signal.
         & Demonstrated the feasibility of continuous, real-time mental state decoding in a high-stakes application, achieving an offline accuracy of 0.75. \\
         
-        Paredes et al. (2022) \cite{b5}
+        EEG-Based Emotion Classification Using Spiking Neural Networks \cite{b5}
         & Emotion classification using a low-power, neuromorphic computing approach on the DEAP dataset.
         & A Spiking Neural Network (SNN) is used to classify raw EEG data directly, operating on event-based spikes rather than continuous values.
         & Showcased SNNs as a power-efficient and temporally precise alternative to conventional deep learning models for EEG analysis. \\
@@ -122,6 +131,8 @@ To distill the diverse strategies into a coherent overview, this section present
     }
     \label{tab:summary_journal}
 \end{table}
+
+\FloatBarrier 
 
 The analysis across these studies reveals several key trends. As highlighted in Table \ref{tab:method_similarities}, a shared reliance on sophisticated feature representation and hybrid models emerges as a common thread, despite the surface-level differences in approach. Methodologies like signal-to-image transformation and engineered feature extraction are central to improving performance. Table \ref{tab:summary_journal} further details this landscape, showing a clear divergence in strategies: some researchers focus on transforming signals into images to leverage powerful vision models, while others pursue meticulously handcrafted features or develop highly specialized network architectures. The emergence of novel paradigms like Spiking Neural Networks (SNNs) \cite{b5} further indicates a field that is not only refining existing methods but also actively exploring fundamentally new ways of processing neural data. This dynamic landscape, centered on the synergy between DSP and ML, underscores the ongoing quest for a definitive solution to the complex challenge of EEG-based emotion recognition.
 
