@@ -1,0 +1,132 @@
+\documentclass[conference]{IEEEtran}
+\IEEEoverridecommandlockouts
+% The preceding line is only needed to identify funding in the first footnote. If that is unneeded, please comment it out.
+%Template version as of 6/27/2024
+
+\usepackage{cite}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{algorithmic}
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{xcolor}
+\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
+    T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+\begin{document}
+
+\title{Digital Signal Processing Techniques for EEG-Based Emotion and Mental State Recognition Using Machine Learning (2022–2025)}
+
+\author{\IEEEauthorblockN{Author Name}
+\IEEEauthorblockA{\textit{Department of Computer Engineering} \\
+\textit{University of Science and Technology of Southern Philippines}\\
+Cagayan de Oro, Philippines \\
+email@address.com}
+}
+
+\maketitle
+
+\begin{abstract} 
+This review paper examines recent advancements in the application of Digital Signal Processing (DSP) techniques for emotion and mental state recognition using Electroencephalogram (EEG) data. The study focuses on literature published between 2022 and 2025, a period marked by the increasing integration of sophisticated DSP methods with advanced machine learning models. We observe a clear trend towards hybrid frameworks, where techniques such as Wavelet Decomposition and Fast Fourier Transform (FFT) are not merely preprocessing steps but are deeply integrated with Convolutional Neural Networks (CNNs) and Long Short-Term Memory (LSTM) networks. This synergy appears to be a significant factor in the improved accuracy and robustness of emotion recognition systems. This paper synthesizes the prevailing methodologies, identifies recurring challenges like noise reduction and feature selection, and discusses the performance of various DSP-ML pipelines. The findings suggest that while significant progress has been made, the pursuit of real-time, reliable, and computationally efficient systems remains a primary objective for future research.
+\end{abstract}
+
+\begin{IEEEkeywords}
+Electroencephalogram (EEG), Emotion Recognition, Digital Signal Processing (DSP), Machine Learning, Feature Extraction, Deep Learning, CNN, LSTM.
+\end{IEEEkeywords}
+
+\section{Introduction}
+The analysis of Electroencephalogram (EEG) signals has emerged as a significant area of research, offering a non-invasive window into the complexities of human brain function. In recent years, there has been a considerable convergence of Digital Signal Processing (DSP) and Machine Learning (ML) to decode these signals for a variety of applications, most notably in the realm of emotion and mental state recognition. The intrinsic nature of EEG data—being non-stationary and highly susceptible to artifacts—necessitates the use of robust DSP techniques. It is no longer sufficient to simply clean the signal; the current paradigm involves a more nuanced approach where feature extraction methods like Fast Fourier Transform (FFT) and wavelet decomposition are employed to distill meaningful information from the raw data \cite{b1}.
+
+The period between 2022 and 2025 has witnessed a significant evolution in this field. As noted by recent comprehensive reviews \cite{b3, b5}, the academic community has moved beyond traditional machine learning models towards more sophisticated deep learning architectures. We are observing a clear trend where DSP-based feature extraction is not a separate preliminary step but is instead intricately woven into the architecture of advanced models. This includes converting 1D EEG signals into 2D time-frequency representations for analysis with Convolutional Neural Networks (CNNs), and developing powerful hybrid systems that combine CNNs with Long Short-Term Memory (LSTM) networks or Support Vector Machines (SVMs) to learn from the complex spatio-temporal structure of EEG data \cite{b2, b4}. This review paper aims to provide a comprehensive overview of these recent advancements. We will explore the dominant DSP pipelines, analyze the performance of various ML classifiers, and discuss the persistent challenges that need to be addressed to build more reliable and efficient EEG-based emotion recognition systems.
+
+\section{Methodology}
+Effective emotion recognition from EEG signals is fundamentally reliant on robust preprocessing, meaningful feature extraction, and powerful classification models. The literature from 2022-2025 emphasizes a multi-stage pipeline where DSP techniques are used to distill discriminative features, which are then fed into advanced machine learning classifiers.
+
+\subsection{DSP Preprocessing and Feature Extraction}
+A dominant trend in recent literature is the transformation of 1D EEG time-series data into 2D time-frequency representations, which can then be treated as images for analysis with powerful computer vision models. Bagherzadeh et al. \cite{b2} provide a compelling example of this approach. They employ the Continuous Wavelet Transform (CWT) to create scalograms, which are detailed 2D images representing the signal\'s energy across different frequencies over time. This method is particularly effective as it provides high resolution in both time and frequency, capturing the transient and non-stationary characteristics of EEG signals that are often missed by traditional methods like the Short-Time Fourier Transform (STFT) \cite{b3}.
+
+The CWT of a signal $x(t)$ is defined as:
+\begin{equation}
+CWT(a, b) = \int_{-\infty}^{\infty} x(t) \psi^*_{a,b}(t) dt
+\end{equation}
+where $\psi^*_{a,b}(t)$ is the complex conjugate of the mother wavelet function, scaled by $a$ and translated by $b$. By converting the signal into a rich 2D representation, this DSP technique allows for the direct application of pre-trained Convolutional Neural Networks (CNNs), enabling transfer learning from the image domain to EEG analysis.
+
+Another widely used approach involves the extraction of a vector of statistical and spectral features from the EEG signal. These handcrafted features aim to quantify specific characteristics of the brain\'s electrical activity. Xu et al. \cite{b4} demonstrate this by extracting a combination of features, including Mel Frequency Cepstral Coefficients (MFCC), entropy, and average power within specific frequency bands. These features are then often converted into topographic maps, which preserve the spatial relationship between the EEG electrodes, before being fed into a classifier \cite{b1}.
+
+\subsection{Machine Learning Models for Classification}
+Once features are extracted, the next critical step is to classify them into emotional states. A recurring theme in the reviewed literature is that no single architecture is sufficient to capture the rich spatio-temporal dynamics of EEG data. As a result, hybrid models have become a popular and effective solution \cite{b1, b3, b5}.
+
+One of the most successful combinations is the CNN-LSTM architecture. This model leverages the strengths of both networks: the CNN excels at learning spatial features from the topographical arrangement of EEG electrodes, while the LSTM is designed to model the temporal dependencies within the EEG time-series. Xu et al. \cite{b4} implement this with a model combining CNN, LSTM, and a ResNet-152 architecture, achieving a high accuracy of 98\% on the SEED-V dataset.
+
+Another powerful hybrid approach is demonstrated by Bagherzadeh et al. \cite{b2}, who combine a pre-trained CNN with a traditional machine learning classifier. In their work, a ResNet-18 model acts as a powerful feature extractor for the 2D CWT scalograms. The deep features learned by the CNN are then fed into a Multiclass Support Vector Machine (MSVM) for the final classification, a method that significantly increased accuracy on the MAHNOB-HCI dataset.
+
+\subsection{Comparative Analysis of Reviewed Studies}
+\begin{table}[htbp]
+\caption{Comparative Summary of Methodologies}
+\begin{center}
+\begin{tabular}{|p{1.3cm}|p{1.3cm}|p{2.3cm}|p{2.3cm}|}
+\hline
+\textbf{Author(s)} & \textbf{Dataset(s)} & \textbf{DSP/Features} & \textbf{ML Model} \\
+\hline
+Hamzah & Abdalla (2024) \cite{b1} & N/A (Review) & Summarizes SVM, KNN, CNN, RNN, DBN. \\
+\hline
+Bagherzadeh et al. (2023) \cite{b2} & DEAP, MAHNOB-HCI & CWT to create 2D scalograms. & Hybrid: CNN (ResNet-18) features + MSVM classifier. \\
+\hline
+Wang et al. (2023) \cite{b3} & N/A (Review) & Reviews STFT, PSD, Wavelet Transform. & Reviews CNNs for spatial and RNNs (LSTM, GRU) for temporal features. \\
+\hline
+Xu et al. (2022) \cite{b4} & SEED-V & MFCC, entropy, avg. power features into topographic maps. & Hybrid: CNN-LSTM with ResNet-152. \\
+\hline
+Chen et al. (2025) \cite{b5} & N/A (Review) & Reviews time, frequency, nonlinear analysis. & Discusses traditional ML and DL (CNNs, GANs, RNNs). \\
+\hline
+\end{tabular}
+\end{center}
+\end{table}
+To provide a clear overview of the different approaches discussed, Table \ref{tab:reviewed_studies} provides a comparative summary of the methodologies employed in the key papers reviewed, offering a concise overview of their approaches to EEG-based emotion recognition. It highlights the diversity in datasets utilized, ranging from specific public datasets like DEAP and MAHNOB-HCI to general reviews of existing literature. Crucially, the table delineates the varied DSP techniques applied for feature extraction, such as Continuous Wavelet Transform (CWT) for generating 2D scalograms, and the extraction of statistical and spectral features like MFCC and average power. Furthermore, it showcases the evolution and preference for different Machine Learning (ML) models, with a clear emphasis on hybrid architectures like CNN-LSTM and combinations of CNNs with traditional classifiers such as MSVMs. This comparison underscores the field\'s dynamic nature, where researchers are continuously exploring novel combinations of DSP and ML to enhance accuracy and robustness, while also revealing common trends and areas of focus within the 2022-2025 research landscape.
+
+
+\section{Challenges and Issues}
+Despite the significant progress in combining DSP and ML for emotion recognition, several key challenges persist, as highlighted consistently across the recent literature \cite{b1, b3, b5}. These challenges must be addressed to move from laboratory settings to real-world applications.
+
+\subsection*{Data Scarcity and Quality}
+The performance of deep learning models is heavily dependent on large, high-quality, and well-annotated datasets. In the field of EEG-based emotion recognition, such datasets are scarce \cite{b5}. The process of collecting EEG data is time-consuming, expensive, and requires specialized equipment and expertise. Furthermore, ensuring high data quality is a significant hurdle. EEG signals are highly sensitive to noise from various sources, including muscle movements (electromyography), eye blinks (electrooculography), and environmental electrical interference. Annotating the data with corresponding emotional labels is also a subjective and challenging task, often relying on self-reporting or external observation, which can be unreliable.
+
+\subsection*{Inter-Subject Variability}
+EEG signals exhibit high inter-subject variability, meaning that brainwave patterns associated with the same emotion can differ dramatically from one person to another \cite{b3}. This variability stems from anatomical differences (e.g., skull thickness), electrode placement, and individual differences in emotional expression and regulation. This makes it extremely difficult to build generalized, subject-independent models that perform well on new users without a calibration phase. Most high-performing models reported in the literature are subject-dependent, meaning they are trained and tested on data from the same individual, which limits their practical applicability.
+
+\subsection*{Lack of Standardization}
+The field suffers from a lack of standardization in experimental protocols, signal processing pipelines, and evaluation metrics \cite{b1}. Different studies use different emotional models (e.g., discrete emotions vs. valence-arousal), stimuli for emotion elicitation (e.g., images, videos, music), and EEG recording hardware. This heterogeneity makes it nearly impossible to directly compare the performance of different models and approaches reported in the literature. A more standardized framework for data collection and benchmarking is crucial for driving reproducible research and measuring true progress in the field.
+
+\subsection*{Computational Complexity and Real-Time Constraints}
+Many of the state-of-the-art hybrid models, such as the CNN-LSTM architectures discussed, are computationally intensive \cite{b4}. They require significant computational resources for both training and inference. This high complexity poses a major barrier to their deployment in real-time applications, especially on resource-constrained platforms like wearable devices or mobile phones. The challenge lies in designing models that are both highly accurate and computationally efficient, achieving a balance between performance and practical feasibility.
+
+\section{Solution}
+The research community is actively developing innovative solutions to address the aforementioned challenges. The review papers point towards several promising directions that are shaping the future of EEG-based emotion recognition.
+
+\subsection*{Data Augmentation and Synthesis}
+To combat the problem of data scarcity, researchers are increasingly turning to data augmentation and synthesis techniques. Generative Adversarial Networks (GANs) have shown particular promise in generating synthetic EEG data that mimics the statistical properties of real signals \cite{b5}. These synthetic signals can be used to augment existing datasets, allowing for the training of more robust and generalizable deep learning models without the prohibitive cost of collecting new data. Other augmentation techniques include adding noise, transforming signals in the time or frequency domain, and creating new samples by mixing existing ones.
+
+\subsection*{Domain Adaptation and Transfer Learning}
+To tackle inter-subject variability, domain adaptation and transfer learning techniques are being actively explored \cite{b3}. The core idea is to adapt a model trained on a large source domain (e.g., a public dataset or a group of subjects) to a new target domain (e.g., a new user) with minimal labeled data. Transfer learning, particularly using pre-trained models from other domains (like the ResNet architecture from computer vision \cite{b2}), allows models to leverage knowledge learned from vast datasets, which can then be fine-tuned for the specific task of EEG classification. These methods aim to reduce the need for extensive subject-specific calibration, making models more practical for real-world use.
+
+\subsection*{Lightweight and Real-Time Models}
+Addressing the challenge of computational complexity is crucial for real-time applications. There is a growing focus on developing lightweight neural network architectures. Techniques such as model pruning (removing redundant connections), quantization (using lower-precision arithmetic), and knowledge distillation (training a smaller model to mimic a larger, more complex one) are being employed. The goal is to create models that can run efficiently on devices with limited computational power, such as wearables and smartphones, without a significant drop in accuracy. This would enable continuous emotion monitoring in everyday life.
+
+\subsection*{Multimodal Fusion}
+Recognizing that EEG provides only one view into a person\'s emotional state, researchers are exploring multimodal fusion. This approach involves combining EEG data with other physiological signals such as electrocardiography (ECG), galvanic skin response (GSR), and electromyography (EMG), or with behavioral cues like facial expressions and speech prosody \cite{b1, b5}. By integrating information from multiple sources, these systems can create a more holistic and accurate representation of emotion. The challenge lies in developing effective fusion strategies that can synergistically combine these heterogeneous data streams.
+
+\section{Conclusion}
+This review has synthesized the prevailing methodologies, challenges, and solutions in the field of EEG-based emotion recognition, based on literature published between 2022 and 2025. The findings show a clear and consistent trend: the deep integration of advanced DSP techniques with powerful machine learning models. The most successful approaches, such as transforming 1D EEG signals into 2D time-frequency representations for CNN analysis or using hybrid CNN-LSTM architectures to capture spatio-temporal dynamics, have become central to modern research and are pushing the boundaries of classification accuracy.
+
+Despite the success of these methods, significant and persistent challenges impede the transition of these systems from controlled laboratory environments to practical, real-world applications. Key issues include the scarcity of large, high-quality datasets, the high degree of inter-subject variability in EEG signals, the lack of standardization in research protocols, and the computational expense of state-of-the-art models. These are not trivial problems, and they collectively hinder the development of robust, generalizable, and accessible emotion recognition technology.
+
+In response, the research community is pursuing a multi-pronged strategy. To combat data limitations, data augmentation and synthesis using GANs are becoming mainstream. To address variability, transfer learning and domain adaptation techniques are being refined to create subject-independent models. For real-world deployment, there is a strong push towards developing lightweight, computationally efficient models suitable for resource-constrained devices. Finally, multimodal fusion, combining EEG with other physiological and behavioral data, is emerging as a key strategy for enhancing reliability.
+
+In essence, the field is in a dynamic cycle of innovation where the solutions to today\'s challenges—such as data synthesis and model optimization—will form the core of tomorrow\'s more advanced methodologies. The convergence of sophisticated DSP and hybrid machine learning models represents the current frontier, paving the way for the next generation of systems that can reliably and ethically interpret human emotional states in real-time.
+
+\begin{thebibliography}{00}
+\bibitem{b1} H. A. Hamzah and K. K. Abdalla, ``EEG-based emotion recognition systems: Comprehensive study,'' \textit{Heliyon}, vol. 10, no. 5, 2024.
+\bibitem{b2} N. Bagherzadeh et al., ``A Hybrid EEG-Based Emotion Recognition Approach Using Wavelet Convolutional Neural Networks and Support Vector Machine,'' \textit{Frontiers in Neuroscience}, 2023.
+\bibitem{b3} X. Wang et al., ``Deep learning-based EEG emotion recognition: Current trends and future perspectives,'' \textit{Frontiers in Psychology}, 2023.
+\bibitem{b4} S. Xu et al., ``EEG-based emotion recognition using hybrid CNN and LSTM networks,'' \textit{Frontiers in Computational Neuroscience}, 2022.
+\bibitem{b5} Y. Chen et al., ``Advances in EEG-based emotion recognition: Challenges, paradigms, and future directions,'' \textit{Applied Soft Computing}, vol. 150, 2025.
+\end{thebibliography}
+
+\end{document}
