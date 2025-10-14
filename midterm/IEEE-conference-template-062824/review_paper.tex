@@ -59,7 +59,30 @@ A more specialized feature extraction approach is seen in the work of Zhang et a
 Venturing beyond conventional deep learning, some researchers are exploring neuromorphic approaches. Paredes et al. \cite{b5} utilize Spiking Neural Networks (SNNs), which more closely mimic biological neural processes. Unlike traditional artificial neural networks that process continuous values, SNNs operate on event-based spikes. This makes them inherently well-suited for processing the temporal dynamics of EEG signals. By representing information as discrete events in time, SNNs offer a potentially more power-efficient and temporally precise method for EEG classification, representing a forward-looking alternative to current deep learning paradigms, especially for implementation on low-power hardware.
 
 \subsection{Comparative Analysis of Reviewed Studies}
-To distill the diverse strategies into a coherent overview, this section presents a comparative analysis of the primary methodologies reviewed. Table \ref{tab:summary_journal} provides a detailed summary of each paper, while Table \ref{tab:method_similarities} highlights the common threads and shared principles among them.
+To distill the diverse strategies into a coherent overview, this section presents a comparative analysis of the primary methodologies reviewed. Table \ref{tab:method_similarities} highlights the common threads and shared principles among the studies, while Table \ref{tab:summary_journal} provides a detailed summary of each paper.
+
+\begin{table}[htbp]
+\centering
+\scriptsize
+\caption{Comparative Analysis of Methodological Similarities}
+\label{tab:method_similarities}
+\renewcommand{\arraystretch}{3}
+\begin{tabular}{p{1.5cm}p{2.5cm}p{4.5cm}}
+\hline
+\textbf{Ref.} & \textbf{Approach} & \textbf{Similarities} \\
+\hline
+\textbf{\cite{b1}, \cite{b2}}
+& Signal-to-Image Transformation
+& Both studies convert 1D EEG signals into 2D image-like representations (scalograms or topographic maps) to leverage powerful CNN architectures from computer vision. \\[1mm]
+\textbf{\cite{b1}, \cite{b2}}
+& Hybrid Model Architectures
+& Both employ hybrid models (CNN+SVM or CNN+LSTM) to capitalize on the strengths of different architectures for feature extraction and classification. \\[1mm]
+\textbf{\cite{b3}, \cite{b4}}
+& Engineered Feature Extraction
+& Both studies rely on meticulously crafting features (entropy measures or multi-block features) to quantify specific signal characteristics, rather than using end-to-end deep learning. \\
+\hline
+\end{tabular}
+\end{table}
 
 \begin{table}[htbp]
     \caption{Summary of Reviewed Journal Papers}
@@ -100,31 +123,7 @@ To distill the diverse strategies into a coherent overview, this section present
     \label{tab:summary_journal}
 \end{table}
 
-\begin{table}[htbp]
-\centering
-\caption{Comparative Analysis of Methodological Similarities}
-\label{tab:method_similarities}
-\renewcommand{\arraystretch}{1.5}
-\begin{tabular}{p{3cm} p{5cm}}
-\hline
-\textbf{Shared Principle} & \textbf{Description and Exhibiting Studies} \\
-\hline
-\textbf{Signal-to-Image Transformation}
-& A common strategy involves converting 1D EEG time-series into 2D representations to leverage powerful CNN architectures from computer vision.
-\textbf{Exhibited by:} Bagherzadeh et al. \cite{b1} (CWT scalograms), Xu et al. \cite{b2} (topographic maps). \\
-\hline
-\textbf{Hybrid Model Architectures}
-& Several studies combine distinct model types to capitalize on their respective strengths, such as separating feature extraction from classification or modeling both spatial and temporal dynamics.
-\textbf{Exhibited by:} Bagherzadeh et al. \cite{b1} (CNN+SVM), Xu et al. \cite{b2} (CNN+LSTM). \\
-\hline
-\textbf{Engineered Feature Extraction}
-& Rather than relying on end-to-end learning, many approaches depend on meticulously crafting features to quantify specific statistical, spectral, or complexity characteristics of the EEG signal.
-\textbf{Exhibited by:} Al-Nafjan et al. \cite{b3} (entropy measures), Zhang et al. \cite{b4} (multi-block features). \\
-\hline
-\end{tabular}
-\end{table}
-
-The analysis across these studies reveals several key trends. As summarized in Table \ref{tab:summary_journal}, there is a clear divergence in approaches: some researchers focus on transforming signals into images to leverage powerful vision models, while others pursue meticulously handcrafted features or develop highly specialized network architectures for specific contexts. Despite these differences, Table \ref{tab:method_similarities} shows a shared reliance on sophisticated feature representation and the use of hybrid models. The emergence of novel paradigms like SNNs \cite{b5} further indicates a field that is not only refining existing methods but also actively exploring fundamentally new ways of processing neural data. This dynamic landscape underscores the ongoing quest for a definitive solution to the complex challenge of EEG-based emotion recognition.
+The analysis across these studies reveals several key trends. As highlighted in Table \ref{tab:method_similarities}, a shared reliance on sophisticated feature representation and hybrid models emerges as a common thread, despite the surface-level differences in approach. Methodologies like signal-to-image transformation and engineered feature extraction are central to improving performance. Table \ref{tab:summary_journal} further details this landscape, showing a clear divergence in strategies: some researchers focus on transforming signals into images to leverage powerful vision models, while others pursue meticulously handcrafted features or develop highly specialized network architectures. The emergence of novel paradigms like Spiking Neural Networks (SNNs) \cite{b5} further indicates a field that is not only refining existing methods but also actively exploring fundamentally new ways of processing neural data. This dynamic landscape, centered on the synergy between DSP and ML, underscores the ongoing quest for a definitive solution to the complex challenge of EEG-based emotion recognition.
 
 
 
