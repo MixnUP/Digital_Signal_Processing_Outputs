@@ -16,19 +16,42 @@
     T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
 \begin{document}
 
-\title{Digital Signal Processing Techniques for EEG-Based Emotion and Mental State Recognition Using Machine Learning (2022–2025)}
+\title{Signal Processing Front-Ends for EEG-Based Emotion and Mental-State Recognition: A Comprehensive Review}
 
-\author{\IEEEauthorblockN{Author Name}
-\IEEEauthorblockA{\textit{Department of Computer Engineering} \\
-\textit{University of Science and Technology of Southern Philippines}\\
-Cagayan de Oro, Philippines \\
-email@address.com}
+\author{
+    \IEEEauthorblockN{Edgie Bajuyo}
+    \IEEEauthorblockA{
+        \textit{Department of Computer Engineering} \\
+        \textit{University of Science and Technology}\\ 
+        \textit{of Southern Philippines} \\
+        Cagayan de Oro City, Philippines \\
+        bajuyo.edgieroszel21@gmail.com
+    \and
+    \IEEEauthorblockN{Adriane Loquinte}
+    \IEEEauthorblockA{
+        \textit{Department of Computer Engineering} \\
+        \textit{University of Science and Technology}\\ 
+        \textit{of Southern Philippines} \\
+        Cagayan de Oro City, Philippines \\
+        adrianeloquinte@gmail.com
+    \and
+    \IEEEauthorblockN{Uriel Dionsay}
+    \IEEEauthorblockA{
+        \textit{Department of Computer Engineering} \\
+        \textit{University of Science and Technology}\\ 
+        \textit{of Southern Philippines} \\
+        Cagayan de Oro City, Philippines \\
+       urieldionsay@gmail.com
 }
-
+}
+}
+}
 \maketitle
 
 \begin{abstract} 
-This review paper examines recent advancements in the application of Digital Signal Processing (DSP) techniques for emotion and mental state recognition using Electroencephalogram (EEG) data. The study focuses on literature published between 2022 and 2025, a period marked by the increasing integration of sophisticated DSP methods with advanced machine learning models. We observe a clear trend towards hybrid frameworks, where techniques such as Wavelet Decomposition and Fast Fourier Transform (FFT) are not merely preprocessing steps but are deeply integrated with Convolutional Neural Networks (CNNs) and Long Short-Term Memory (LSTM) networks. This synergy appears to be a significant factor in the improved accuracy and robustness of emotion recognition systems. This paper synthesizes the prevailing methodologies, identifies recurring challenges like noise reduction and feature selection, and discusses the performance of various DSP-ML pipelines. The findings suggest that while significant progress has been made, the pursuit of real-time, reliable, and computationally efficient systems remains a primary objective for future research.
+This review surveys digital signal processing methods for electroencephalography-based emotion and mental-state recognition with machine learning. The paper organizes recent approaches into three practical patterns and a neuromorphic alternative: (1) time–frequency image pipelines that convert electroencephalography windows to continuous wavelet transform scalograms, extract convolutional features, and classify with a multiclass support vector machine; reported gains come from using early convolutional layers and subject-independent evaluation. (2) hybrid convolutional neural network–long short-term memory designs that apply standard preprocessing and feature formation (including entropy and band-power) before per-window convolution and across-window sequence modeling; these have achieved high accuracy on standard benchmarks. (3) feature-centric pipelines that either use entropy families (approximate, sample, permutation, differential, multiscale fuzzy, wavelet) with classical classifiers or learn multiple-feature-block convolutional representations for continuous decoding in operational settings. A neuromorphic route encodes engineered features such as discrete wavelet transform coefficients, fast Fourier transform magnitudes, and variance into spikes for spiking neural network classification.
+
+Common challenges include inter-subject variability, noise and non-stationarity, heterogeneous pipelines that hinder comparability, computational cost of large backbones, and dataset inconsistencies. The paper outlines practical responses used across the reviewed studies: subject-independent protocols such as leave-one-subject-out cross-validation; consistent filtering, normalization, and fixed windowing; artifact handling with Independent Component Analysis when needed; preference for compact models or early-layer feature taps with lightweight classifiers; and harmonized preprocessing and label schemes for cross-dataset work. Overall, the review highlights reproducible digital signal processing choices and model designs that balance accuracy, efficiency, and deployment feasibility for electroencephalography-based emotion and mental-state recognition.
 \end{abstract}
 
 \begin{IEEEkeywords}
@@ -38,18 +61,19 @@ Electroencephalogram (EEG), Emotion Recognition, Digital Signal Processing (DSP)
 \section{Introduction}
 The analysis of Electroencephalogram (EEG) signals has emerged as a significant area of research, offering a non-invasive window into the complexities of human brain function. In recent years, emotion and mental state recognition from electroencephalography is an increasingly important direction in human–computer interaction, mental health assessment, and adaptive multimedia systems as it enables machine learning systems to infer internal cognitive–affective dynamics from noninvasive neural signals. 
 
-There has been a considerable convergence of Digital Signal Processing (DSP) and Machine Learning (ML) to decode these signals for a variety of applications, Traditional pipelines have relied on band-limited preprocessing and handcrafted features, but their sensitivity to artifacts, subject variability, and non-stationarity often limits generalization across individuals and recording sessions [6], [8].
- We are observing a clear trend where DSP-based feature extraction is not a separate preliminary step but is instead intricately woven into the architecture of advanced models. This includes the usage of Wavelet Convolutional Neural Network (WCNN) and Support Vector Machine (SVM) [1] where it basically converts electroencephalography (EEG) windows into continuous wavelet transform scalograms. This approach also uses several references where it also makes use of explicit time–frequency images plus a convolutional neural network feature extractor and finishes with a classical margin-based classifier. [6][8] Similarly, [2] makes use of EEG Recognition through the usage of hybrid CNN and Long short-term Memory Classification (LSTM) which combines convolutional neural network with a long short-term memory module after standard preprocessing and feature formation, aligning with the hybrid convolutional neural network–recurrent neural network designs highlighted and contextualized in the deep-learning survey [7].
+There has been a considerable convergence of Digital Signal Processing (DSP) and Machine Learning (ML) to decode these signals for a variety of applications, Traditional pipelines have relied on band-limited preprocessing and handcrafted features, but their sensitivity to artifacts, subject variability, and non-stationarity often limits generalization across individuals and recording sessions \cite{Hag2021StressHybridFS_Sensors,Hamzah2024HeliyonEEGERSurvey}
 
- As of recent, there are numerous amounts of features for CNN that can coincide with the recognition of emotion and mental states. Such as that of [3][4] which focuses on the usage of entropy and other multiple features that can determine and decode a person's mental state. Specifically, the former [3] uses mathematically defined entropy descriptors as the primary digital signal processing representation and evaluates with standard supervised classifiers [8][10]. Whereas, the latter [4] uses a tailored convolutional neural network directly on electroencephalography (with minimal handcrafted features) and targets continuous, sliding-window inference rather than only trial-wise emotion labels [6].
- In a way, [5] is also an approach where it uses spiking neural networks and basically extracts engineered features per window which then converts them into spike trains. In itself, it's a rather distinct approach that keeps a conventional digital signal processing front-end but replaces standard classifiers with a spiking neural network to exploit spike-based computation [9].
+ We are observing a clear trend where DSP-based feature extraction is not a separate preliminary step but is instead intricately woven into the architecture of advanced models. This includes the usage of Wavelet Convolutional Neural Network (WCNN) and Support Vector Machine (SVM) \cite{Bagherzadeh2023HybridEEGWaveletCNN_SVM} where it basically converts electroencephalography (EEG) windows into continuous wavelet transform scalograms. This approach also uses several references where it also makes use of explicit time–frequency images plus a convolutional neural network feature extractor and finishes with a classical margin-based classifier \cite{Hag2021StressHybridFS_Sensors,Hamzah2024HeliyonEEGERSurvey}. Similarly, \cite{Chakravarthi2022EEGHybridCNNLSTM} makes use of EEG Recognition through the usage of hybrid CNN and Long short-term Memory Classification (LSTM) which combines convolutional neural network with a long short-term memory module after standard preprocessing and feature formation, aligning with the hybrid convolutional neural network–recurrent neural network designs highlighted and contextualized in the deep-learning survey \cite{Jung2022VR_Emotion_IJERPH}.
+
+ As of recent, there are numerous amounts of features for CNN that can coincide with the recognition of emotion and mental states. Such as that of \cite{Patel2021EEGEntropyReview, Lee2020MFB_CNN_PilotMentalStates} which focuses on the usage of entropy and other multiple features that can determine and decode a person's mental state. Specifically, the former \cite{Patel2021EEGEntropyReview} uses mathematically defined entropy descriptors as the primary digital signal processing representation and evaluates with standard supervised classifiers \cite{Hamzah2024HeliyonEEGERSurvey,Chen2025AdvancesEEGEmotion_ASOC}. Whereas, the latter \cite{Lee2020MFB_CNN_PilotMentalStates} uses a tailored convolutional neural network directly on electroencephalography (with minimal handcrafted features) and targets continuous, sliding-window inference rather than only trial-wise emotion labels \cite{Hag2021StressHybridFS_Sensors}.
+ In a way, \cite{Luo2020SNN_EEGEmotion} is also an approach where it uses spiking neural networks and basically extracts engineered features per window which then converts them into spike trains. In itself, it's a rather distinct approach that keeps a conventional digital signal processing front-end but replaces standard classifiers with a spiking neural network to exploit spike-based computation \cite{Wang2023DL_EEG_Review}.
 
  Through these advances, this paper proposes the usage of several processing techniques that work alongside with the training of appropriate models. This review paper aims to introduce several approaches to realizing EGG-Recognition for both emotion and mental spectrum in order to be used alongside machine learning or basically the training of appropriate models.
 \section{Methodology}
 The intellectual challenge of decoding emotions from EEG signals lies not in a single algorithm, but in the thoughtful construction of a multi-stage processing pipeline. This section dissects this symbiotic relationship.
 
 \subsection{Wavelet Convolutional Neural Networks and Support Vector Machine}
-A pivotal insight in recent research is that the representation of data is as crucial as the classification model itself. One dominant trend is the transmutation of 1D EEG time-series data into 2D time-frequency representations, effectively turning a signal processing problem into a computer vision one. Time-frequency (TF) methods, such as the Continuous Wavelet Transform (CWT), can convert a 1D EEG signal into a 2D representation that captures the spectral variation of the signal over time. One dimension corresponds to time while the other represents frequency, forming an image that reflects EEG power fluctuations across both domains. This process models the signal as a linear combination of basic functions known as wavelets, mathematically expressed as:
+A pivotal insight in recent research is that the representation of data is as crucial as the classification model itself. One dominant trend is the transmutation of 1D EEG time-series data into 2D time-frequency representations, effectively turning a signal processing problem into a computer vision one. Time-frequency (TF) methods \cite{Pachori2023TimeFrequencyBook}, such as the Continuous Wavelet Transform (CWT), can convert a 1D EEG signal into a 2D representation that captures the spectral variation of the signal over time. One dimension corresponds to time while the other represents frequency, forming an image that reflects EEG power fluctuations across both domains. This process models the signal as a linear combination of basic functions known as wavelets, mathematically expressed as:
 
 \begin{equation}
 W_{(a,b)}[x(t)] = \frac{1}{|a|^{1/2}} \int_{-\infty}^{+\infty} x(t)\,\varphi^{*}\!\left(\frac{t - b}{a}\right) dt
@@ -57,11 +81,11 @@ W_{(a,b)}[x(t)] = \frac{1}{|a|^{1/2}} \int_{-\infty}^{+\infty} x(t)\,\varphi^{*}
 
 where \(a\) is the scale (a real and positive value), \(b\) is the translational parameter (a real number), and \(\varphi\) denotes the mother wavelet, which localizes the signal in both time and frequency domains.
 
-This image representation of EEG power changes in time and frequency effectively captures the transient, non-stationary nature of neural oscillations. \cite{b1} offers a compelling demonstration of this, employing the CWT to generate scalograms. These 2D images allow researchers to leverage the immense power of pre-trained Convolutional Neural Networks (CNNs) \cite{b1}. In the study, the deep features learned by a pre-trained ResNet-18 from the CWT scalograms were subsequently fed into a Multiclass Support Vector Machine (MSVM) \cite{b1}. This hybrid strategy, which separates the task of feature representation from classification, significantly boosted performance on the MAHNOB-HCI dataset.
+This image representation of EEG power changes in time and frequency effectively captures the transient, non-stationary nature of neural oscillations. Similarly, \cite{Bagherzadeh2023HybridEEGWaveletCNN_SVM} provides a compelling demonstration of this, employing the CWT to generate scalograms. These 2D images allow researchers to leverage the immense power of pre-trained Convolutional Neural Networks (CNNs) \cite{Bagherzadeh2023HybridEEGWaveletCNN_SVM}. In the study, the deep features learned by a pre-trained ResNet-18 from the CWT scalograms were subsequently fed into a Multiclass Support Vector Machine (MSVM) \cite{Bagherzadeh2023HybridEEGWaveletCNN_SVM}. This hybrid strategy, which separates the task of feature representation from classification, significantly boosted performance on the MAHNOB-HCI dataset.
 
-Four pre-trained CNNs were evaluated using three performance measures—accuracy, precision, and recall—through the leave-one-subject-out cross-validation (LOSO-CV) approach. In this approach, data from 31 subjects were used to fine-tune existing CNNs, while data from another subject were used as the test set. This ensures subject independence, as no samples from a single subject appear in both the training and testing sets. The process repeats until all subjects have been tested once, and the final reported results are the mean and standard deviation across all iterations.
+Four pre-trained CNNs were evaluated using three performance measures—accuracy, precision, and recall—through the leave-one-subject-out cross-validation (LOSO-CV) \cite{Pauli2021BalancedLOSO} approach. In this approach, data from 31 subjects were used to fine-tune existing CNNs, while data from another subject were used as the test set. This ensures subject independence, as no samples from a single subject appear in both the training and testing sets. The process repeats until all subjects have been tested once, and the final reported results are the mean and standard deviation across all iterations.
 
-Accuracy, precision, and recall are calculated as follows:
+Accuracy, precision, and recall \cite{Powers2020EvaluationArXiv} are calculated as follows:
 
 \begin{equation}
 Accuracy = \frac{1}{l} \sum_{i=1}^{l} \frac{tp_i + tn_i}{tp_i + tn_i + fp_i + fn_i}
@@ -79,7 +103,7 @@ where \(tp_i\), \(tn_i\), \(fp_i\), and \(fn_i\) denote the true positive, true 
 
 
 \subsection{Hybrid CNN and LSTM Classification}
-Another powerful approach involves creating hybrid architectures that combine different neural network types to process EEG data. The CNN-LSTM architecture is a prime example, leveraging the spatial feature learning of CNNs with the temporal sequence modeling of LSTMs. \cite{b2} exemplifies this with a model that integrates a CNN, LSTM, and a ResNet-152 backbone.
+Another powerful approach involves creating hybrid architectures that combine different neural network types to process EEG data. The CNN-LSTM architecture is a prime example, leveraging the spatial feature learning of CNNs with the temporal sequence modeling of LSTMs. \cite{Chakravarthi2022EEGHybridCNNLSTM} exemplifies this with a model that integrates a CNN, LSTM, and a ResNet-152 backbone \cite{Shanmugasundaram2024APLResNet152}.
 
 \begin{figure}[H]
     \centering
@@ -88,7 +112,7 @@ Another powerful approach involves creating hybrid architectures that combine di
     \label{fig:eeg_flow}
 \end{figure}
 
-The general EEG-based emotion identification process begins with data acquisition and preprocessing, as shown in Figure~\ref{fig:eeg_flow}. EEG data are collected and normalized to ensure consistency across sessions and subjects. Noise and artifacts are then mitigated using band-pass filters, typically in the range of 1–75 Hz, to preserve relevant frequency components. After preprocessing, the signals are transformed into structured representations such as Mel Frequency Cepstral Coefficients (MFCCs) \cite{b2}, entropy parameters, or topographic feature maps. These representations serve as the input to the hybrid CNN-LSTM network, which learns spatial features through convolutional layers and temporal dependencies through recurrent layers. This combined approach enhances the model’s ability to recognize emotion-related EEG patterns and classify them accurately.
+The general EEG-based emotion identification process begins with data acquisition and preprocessing, as shown in Figure~\ref{fig:eeg_flow}. EEG data are collected and normalized to ensure consistency across sessions and subjects. Noise and artifacts are then mitigated using band-pass filters, typically in the range of 1–75 Hz, to preserve relevant frequency components. After preprocessing, the signals are transformed into structured representations such as Mel Frequency Cepstral Coefficients (MFCCs) \cite{Chakravarthi2022EEGHybridCNNLSTM}, entropy parameters, or topographic feature maps. These representations serve as the input to the hybrid CNN-LSTM network, which learns spatial features through convolutional layers and temporal dependencies through recurrent layers. This combined approach enhances the model’s ability to recognize emotion-related EEG patterns and classify them accurately.
 
 \begin{figure}[H]
     \centering
@@ -97,7 +121,7 @@ The general EEG-based emotion identification process begins with data acquisitio
     \label{fig:cnn_lstm_framework}
 \end{figure}
 
-Figure~\ref{fig:cnn_lstm_framework} presents the complete methodological framework of the CNN-LSTM model used for EEG-based emotion classification. The model merges a homogeneous CNN and LSTM classifier with the ResNet-152 backbone to maximize both spatial and temporal feature representation. The SEED-V EEG dataset—comprising emotional states such as happiness, disgust, fear, neutral, and sadness—was used to evaluate this model. Preprocessing was conducted to prepare EEG data channels (FP1, FP2, FC6, and F3), followed by feature extraction through MFCC computation and entropy analysis. The entropy was calculated using the sample entropy method, while the Hurst exponent was determined via R/S analysis to capture signal complexity and variability.
+Figure~\ref{fig:cnn_lstm_framework} presents the complete methodological framework of the CNN-LSTM model used for EEG-based emotion classification. The model merges a homogeneous CNN and LSTM classifier with the ResNet-152 backbone to maximize both spatial and temporal feature representation. The SEED-V EEG dataset—comprising emotional states such as happiness, disgust, fear, neutral, and sadness—was used to evaluate this model. Preprocessing was conducted to prepare EEG data channels (FP1, FP2, FC6, and F3), followed by feature extraction through MFCC \cite{Chakravarthi2022EEGHybridCNNLSTM} computation and entropy analysis. The entropy was calculated using the sample entropy method, while the Hurst exponent was determined via R/S analysis to capture signal complexity and variability.
 
 The extracted features were converted into topographic maps that served as CNN inputs, while the LSTM layers modeled the temporal dynamics of these representations. Both CNN and CNN-LSTM configurations employing ResNet-152 were trained and compared. The models classified emotional states and conditions such as PTSD and non-PTSD, with performance evaluated using standard metrics including accuracy, precision, recall, and F1-score. This end-to-end framework demonstrates the hybrid model’s capacity to fuse spatial-spectral and temporal information for robust EEG-based emotion recognition.
 
@@ -112,9 +136,9 @@ In EEG-based emotion and mental state recognition, one emerging approach focuses
     \label{fig:mfb_cnn_pipeline}
 \end{figure}
 
-A particularly salient feature in this domain is entropy, which quantifies the signal’s complexity. \cite{b3} explored how various entropy-based measures—including Differential Entropy (DE), Sample Entropy (SampEn), and Approximate Entropy (ApEn) \cite{b3}—can serve as potent indicators of emotional states. These handcrafted features are then classified using traditional machine learning models such as SVM, k-NN, and Decision Trees.
+A particularly salient feature in this domain is entropy, which quantifies the signal’s complexity. \cite{Patel2021EEGEntropyReview} explored how various entropy-based measures—including Differential Entropy (DE), Sample Entropy (SampEn), and Approximate Entropy (ApEn) \cite{Patel2021EEGEntropyReview}—can serve as potent indicators of emotional states. These handcrafted features are then classified using traditional machine learning models such as SVM, k-NN, and Decision Trees.
 
-Building upon this foundation, \cite{b4} proposed the Multiple Feature Block-based Convolutional Neural Network (MFB-CNN), a hybrid model designed to decode mental states in high-interference environments such as simulated flight. Because EEG data in such settings are susceptible to motion artifacts, preprocessing plays a vital role. Artifacts were removed using Independent Component Analysis (ICA) \cite{b4}, where four EOG channels were designated as contamination references. Signal processing and experimental control were implemented using MATLAB 2019a with the BBCI toolbox.
+Building upon this foundation, \cite{Lee2020MFB_CNN_PilotMentalStates} proposed the Multiple Feature Block-based Convolutional Neural Network (MFB-CNN), a hybrid model designed to decode mental states in high-interference environments such as simulated flight. Because EEG data in such settings are susceptible to motion artifacts, preprocessing plays a vital role. Artifacts were removed using Independent Component Analysis (ICA) \cite{Lee2020MFB_CNN_PilotMentalStates}, where four EOG channels were designated as contamination references. Signal processing and experimental control were implemented using MATLAB 2019a with the BBCI toolbox.
 
 After preprocessing, the EEG dataset consisted of all recorded channels and sampling points (300 × 300) as input matrices. The MFB-CNN was structured into seven convolutional blocks organized hierarchically to enable progressive feature abstraction. Each convolutional block contained four convolutional layers and one batch-normalization layer with a filter size of 32. Temporal feature extraction used filter sizes of 1 × 5, while spatial feature extraction in later blocks used 3 × 1 filters to capture inter-channel dependencies. Dropout layers with a rate of 0.5 were applied to prevent overfitting, and max- and average-pooling layers reduced redundant information while retaining essential activation patterns.
 
@@ -132,7 +156,7 @@ For model training, the network was iteratively trained over 30 epochs, and clas
 
 
 \subsection{Spiking Neural Networks}
-Venturing beyond conventional deep learning, some researchers are exploring neuromorphic approaches that emulate biological neural behavior more closely. Spiking Neural Networks (SNNs) \cite{b5} operate on event-driven computations, processing information as discrete spikes rather than continuous activations. This time-based mechanism enables SNNs to capture temporal dependencies within EEG signals efficiently while consuming significantly less power—making them ideal for real-time emotion recognition and wearable applications.
+Venturing beyond conventional deep learning, some researchers are exploring neuromorphic approaches that emulate biological neural behavior more closely. Spiking Neural Networks (SNNs) \cite{Luo2020SNN_EEGEmotion} operate on event-driven computations, processing information as discrete spikes rather than continuous activations. This time-based mechanism enables SNNs to capture temporal dependencies within EEG signals efficiently while consuming significantly less power—making them ideal for real-time emotion recognition and wearable applications.
 
 \begin{figure}[H]
     \centering
@@ -141,7 +165,7 @@ Venturing beyond conventional deep learning, some researchers are exploring neur
     \label{fig:desnn_pipeline}
 \end{figure}
 
-As shown in Figure~\ref{fig:desnn_pipeline}, EEG-based emotion recognition using SNNs follows a structured pipeline: data processing, feature extraction, and classification. The raw EEG data undergo preprocessing to remove noise and artifacts. Datasets such as DEAP or SEED are typically down-sampled to 128–200 Hz and filtered using a band-pass filter (0.75–45 Hz) via EEGLAB or similar toolboxes. Signals are separated into frequency bands (alpha, beta, gamma, and theta), corresponding to specific physiological and cognitive states.
+As shown in Figure~\ref{fig:desnn_pipeline}, EEG-based emotion recognition using SNNs follows a structured pipeline: data processing, feature extraction, and classification. The raw EEG data undergo preprocessing to remove noise and artifacts. Datasets such as DEAP or SEED [15] are typically down-sampled to 128–200 Hz and filtered using a band-pass filter (0.75–45 Hz) via EEGLAB or similar toolboxes. Signals are separated into frequency bands (alpha, beta, gamma, and theta), corresponding to specific physiological and cognitive states.
 
 Feature extraction then integrates both time-domain and frequency-domain analyses to generate spike-compatible features. In the time domain, the variance of EEG signals helps identify steady emotional states, computed as:
 
@@ -150,7 +174,7 @@ Feature extraction then integrates both time-domain and frequency-domain analyse
 v_{\xi} = \frac{1}{T} \sum_{t=1}^{T} [\xi(t) - \mu_{\xi}]^2
 \end{equation}
 
-In the frequency domain, the Fast Fourier Transform (FFT) and Discrete Wavelet Transform (DWT) \cite{b5} are applied to extract oscillatory and transient features. The DFT of the EEG signal \( \xi(t) \) is expressed as:
+In the frequency domain, the Fast Fourier Transform (FFT) and Discrete Wavelet Transform (DWT) \cite{Luo2020SNN_EEGEmotion} are applied to extract oscillatory and transient features. The DFT of the EEG signal \( \xi(t) \) is expressed as:
 
 \begin{equation}
 \xi(k) = DFT[\xi(t)] = \sum_{t=0}^{N-1} \xi(t) W_N^{tk}, \quad W_N^k = e^{-j \frac{2\pi k}{N}}
@@ -165,7 +189,7 @@ W(a,b) = \frac{1}{\sqrt{|a|}} \int s(t) \psi^* \left( \frac{t - b}{a} \right) dt
 
 where \(a\) and \(b\) represent the scaling and translation parameters, and \(\psi(t)\) is the mother wavelet, often the “db4” wavelet for EEG applications.
 
-After these transformations, features are spike-encoded, converting continuous amplitude information into discrete spike trains. These spike patterns are then used as input to a spiking network, where temporal learning mechanisms such as Spike-Timing-Dependent Plasticity (STDP) \cite{b5} dynamically adjust synaptic weights according to spike timing differences.
+After these transformations, features are spike-encoded, converting continuous amplitude information into discrete spike trains. These spike patterns are then used as input to a spiking network, where temporal learning mechanisms such as Spike-Timing-Dependent Plasticity (STDP) \cite{Luo2020SNN_EEGEmotion} dynamically adjust synaptic weights according to spike timing differences.
 
 \begin{figure}[H]
     \centering
@@ -209,24 +233,26 @@ To distill the diverse strategies into a coherent overview, this section present
 \hline
 \textbf{Ref.} & \textbf{Approach} & \textbf{Similarities} \\
 \hline
-\textbf{\cite{b1}}
+\textbf{\cite{Bagherzadeh2023HybridEEGWaveletCNN_SVM}}
 & Wavelet Convolutional Neural Networks and Support Vector Machine
 & The usage of wavelet convolutional neural networks along with support vector machines plays a fairly crucial role in this study as it provides a way to convert electroencephalography windows into continuous wavelet transform scalograms, which is proven necessary for further research due to the usage of convolutional neural networks \\[1mm]
-\textbf{\cite{b2}}
+\textbf{\cite{Chakravarthi2022EEGHybridCNNLSTM}}
 & Hybrid Convolutional Neural Network and Long Short-term Memory Classification
 & Hybrid convolutional neural network and long short-term memory classification basically implements hybrid models (CNN+LSTM) to capitalize on the strengths of two-stage deep architecture that separates per-window representation from across-window dynamics. \\[1mm]
-\textbf{\cite{b3}}
+\textbf{\cite{Patel2021EEGEntropyReview}}
 & Entropy as a Feature Extraction Measure
 & Entropy as a feature extraction measure uses mathematically defined entropy descriptors as the primary digital signal processing representation and evaluates with standard supervised classifiers. This works similarly with other features for convolutional neural network\\[1mm]
-\textbf{\cite{b4}}
+\textbf{\cite{Lee2020MFB_CNN_PilotMentalStates}}
 & Multiple Feature Block-Based Convolutional Neural Network
 & Block-based convolutional neural network features multiple Uses that are tailored to convolutional neural network which operates directly on electroencephalography and targets continuous, sliding-window inference rather than only trial-wise emotion labels. \\[1mm]
-\textbf{\cite{b5}}
+\textbf{\cite{Luo2020SNN_EEGEmotion}}
 & Usage of Spiking Neural Networks
 & Spiking neural networks uses a distinct approach that keeps a conventional digital signal processing front-end but replaces standard classifiers with a spiking neural network to exploit spike-based computation. \\[1mm]
 \hline
 \end{tabular}
 \end{table}
+\FloatBarrier
+The analysis across these studies reveals several key trends. As highlighted in Table \ref{tab:method_similarities}, The goal is to show, at a glance, which methods belong to the same family so that later comparisons are fair. This table also basically finds similarities between these main references in order to state the common idea these pipelines share (for example, time–frequency image formation, sequence modeling across windows, use of mathematically defined features, sliding-window inference, or engineered features with a nonstandard classifier). This table is present to justify why the paper groups methods the way it does, and to make the evaluation choices (preprocessing, windowing, feature formation, classifier) transparent and comparable across studies.
 
 \begin{table}[htbp]
     \caption{Summary of Reviewed Journal Papers}
@@ -238,30 +264,30 @@ To distill the diverse strategies into a coherent overview, this section present
         \hline
         \textbf{Paper Title} & \textbf{Focus} & \textbf{Mathematical Tools Used} & \textbf{Key Findings} \\
         \hline
-        A Hybrid EEG-Based Emotion Recognition Approach Using Wavelet Convolutional Neural Networks and Support Vector Machine \cite{b1}
-        & Emotion recognition on DEAP and MAHNOB-HCI datasets using a hybrid computer vision approach.
-        & EEG signals are converted to 2D scalograms using CWT. A pre-trained ResNet-18 extracts features, which are then classified by a Multiclass SVM.
-        & The hybrid CNN-SVM model significantly boosted classification performance, demonstrating the power of transfer learning from the visual domain. \\
+        A Hybrid EEG-Based Emotion Recognition Approach Using Wavelet Convolutional Neural Networks and Support Vector Machine \cite{Bagherzadeh2023HybridEEGWaveletCNN_SVM}
+        & Conversion of electroencephalography windows to time–frequency images and classify emotions with deep features plus a classical classifier.
+        & Continuous Wavelet Transform to create scalograms; convolutional neural network intermediate feature maps; multiclass Support Vector Machine; leave-one-subject-out cross-validation.
+        & Early-layer convolutional features combined with a multiclass Support Vector Machine improved accuracy versus end-to-end baselines; best results reported around 87.45\% (DEAP) on the Database for Emotion Analysis using Physiological Signals. \\
         
-        EEG-based emotion recognition using hybrid CNN and LSTM networks \cite{b2}
-        & High-accuracy emotion recognition (happiness, sadness, fear, disgust) on the SEED-V dataset.
-        & Extracts MFCC and entropy features, which are projected onto 2D topographic maps. A hybrid CNN-LSTM architecture with a ResNet-152 backbone classifies the spatio-temporal data.
-        & Achieved a state-of-the-art accuracy of 98\%, highlighting the strength of combining spatial and temporal feature learning. \\
+        EEG-based emotion recognition using hybrid CNN and LSTM networks \cite{Chakravarthi2022EEGHybridCNNLSTM}
+        & Hybrid deep model that encodes per-window patterns and then models window-to-window evolution for emotion recognition.
+        & Band-pass filtering and normalization; entropy measures such as sample entropy; band-power features in canonical frequency bands; convolutional neural network; long short-term memory recurrent module; softmax classification.
+        & Reported accuracy of approximately 98\% on the Shanghai Jiao Tong University five-class dataset, outperforming support vector machine and artificial neural network baselines provided by the authors. \\
         
-        EEG-based human emotion recognition using entropy as a feature extraction measure \cite{b3}
-        & Investigating the efficacy of various entropy-based features for emotion recognition.
-        & Extracts a suite of entropy measures (e.g., Sample Entropy, Approximate Entropy, Differential Entropy) and uses traditional ML models (SVM, k-NN, Decision Tree) for classification.
-        & Confirmed that entropy features are potent and reliable indicators for distinguishing between different emotional states. \\
+        EEG-based human emotion recognition using entropy as a feature extraction measure \cite{Patel2021EEGEntropyReview}
+        & Survey and analysis of entropy-family features for emotion recognition from electroencephalography.
+        & Approximate entropy; sample entropy; permutation entropy; differential entropy; multiscale fuzzy entropy; wavelet entropy; empirical mode decomposition–based entropies; classifiers such as support vector machines and k-nearest neighbors.
+        & Shows that entropy features are effective descriptors of nonlinear dynamics; summarizes multiple studies with competitive results on common datasets, and positions entropy features as strong baselines and as inputs to modern models. \\
         
-        Continuous EEG Decoding of Pilots’ Mental States Using Multiple Feature Block-Based Convolutional Neural Network \cite{b4}
-        & Continuous decoding of pilot mental states (fatigue, workload, distraction) in a simulated flight environment.
-        & A custom Multiple Feature Block-based CNN (MFB-CNN) processes distinct blocks of features from the time and frequency domains of the EEG signal.
-        & Demonstrated the feasibility of continuous, real-time mental state decoding in a high-stakes application, achieving an offline accuracy of 0.75. \\
+        Continuous EEG Decoding of Pilots’ Mental States Using Multiple Feature Block-Based Convolutional Neural Network \cite{Lee2020MFB_CNN_PilotMentalStates}
+        & Continuous decoding of mental states such as fatigue, workload, and distraction using a tailored convolutional architecture.
+        & Multiple feature block–based convolutional neural network with temporal and spatial filtering; sliding-window inference; cross-subject validation protocols.
+        & Offline accuracy reported around 0.75\% with standard deviation near 0.04\%; pseudo-online detection around 0.72\% for fatigue and workload and around 0.61\% for distraction, demonstrating feasibility for continuous monitoring. \\
         
-        EEG-Based Emotion Classification Using Spiking Neural Networks \cite{b5}
-        & Emotion classification using a low-power, neuromorphic computing approach on the DEAP dataset.
-        & A Spiking Neural Network (SNN) is used to classify raw EEG data directly, operating on event-based spikes rather than continuous values.
-        & Showcased SNNs as a power-efficient and temporally precise alternative to conventional deep learning models for EEG analysis. \\
+        EEG-Based Emotion Classification Using Spiking Neural Networks \cite{Luo2020SNN_EEGEmotion}
+        & Neuromorphic classification of emotions using spike-encoded engineered features.
+        & Discrete Wavelet Transform; Fast Fourier Transform; time-domain variance; spike encoding; spiking neural network classifier.
+        & On the Database for Emotion Analysis using Physiological Signals, accuracies per affective dimension reported around 74\% to 86\%. \\
         \hline
     \end{tabular}
     }
@@ -270,39 +296,35 @@ To distill the diverse strategies into a coherent overview, this section present
 
 \FloatBarrier 
 
-The analysis across these studies reveals several key trends. As highlighted in Table \ref{tab:method_similarities}, a shared reliance on sophisticated feature representation and hybrid models emerges as a common thread, despite the surface-level differences in approach. Methodologies like signal-to-image transformation and engineered feature extraction are central to improving performance. Table \ref{tab:summary_journal} further details this landscape, showing a clear divergence in strategies: some researchers focus on transforming signals into images to leverage powerful vision models, while others pursue meticulously handcrafted features or develop highly specialized network architectures. The emergence of novel paradigms like Spiking Neural Networks (SNNs) \cite{b5} further indicates a field that is not only refining existing methods but also actively exploring fundamentally new ways of processing neural data. This dynamic landscape, centered on the synergy between DSP and ML, underscores the ongoing quest for a definitive solution to the complex challenge of EEG-based emotion recognition.
+Table \ref{tab:summary_journal} presents a comparative summary of five journal papers, each addressing key challenges in electroencephalography-based emotion and mental-state recognition. Although the problem settings differ (trial-wise emotion classification versus continuous state decoding), the papers collectively advance practical digital signal processing pipelines for analyzing electroencephalography data.
+
+Despite using different mathematical tools—ranging from time–frequency analysis with continuous wavelet transform and convolutional feature extraction, to hybrid convolutional neural network–long short-term memory models, entropy-based feature sets with classical classifiers, multiple-feature-block convolutional networks for continuous decoding, and spiking neural networks with engineered features—the studies share a common objective: improving accuracy and robustness under subject-wise evaluation while keeping computation feasible for deployment. 
+
+These shared methodologies underline the broader significance of structured preprocessing, well-defined feature construction, and clearly stated evaluation protocols in building reliable, reproducible electroencephalography emotion recognition systems.
 
 
 \section{Challenges and Issues}
-Despite the significant progress in combining DSP and ML for emotion recognition, several key challenges persist, as highlighted consistently across the recent literature \cite{b6, b7, b8}. These challenges must be addressed to move from laboratory settings to real-world applications.
+Challenges arise at multiple stages in developing and implementing EEG-based emotion recognition systems. One major challenge lies in managing the high inter-subject variability of EEG signals. Neural patterns associated with identical emotional states differ significantly across individuals, leading to inconsistencies in model generalization. To address this, studies such as the CWT-CNN approach \cite{Bagherzadeh2023HybridEEGWaveletCNN_SVM} employ Leave-One-Subject-Out Cross-Validation (LOSO-CV) to evaluate inter-person robustness. Achieving consistent accuracy across subjects remains difficult due to variations in electrode placement, signal amplitude, and noise characteristics inherent to EEG recordings.
 
-\subsection*{Data Scarcity and Quality}
-The performance of deep learning models is heavily dependent on large, high-quality, and well-annotated datasets. In the field of EEG-based emotion recognition, such datasets are scarce \cite{b8}. The process of collecting EEG data is time-consuming, expensive, and requires specialized equipment and expertise. Furthermore, ensuring high data quality is a significant hurdle. EEG signals are highly sensitive to noise from various sources, including muscle movements (electromyography), eye blinks (electrooculography), and environmental electrical interference. Annotating the data with corresponding emotional labels is also a subjective and challenging task, often relying on self-reporting or external observation, which can be unreliable.
+The noise-prone and non-stationary nature of EEG data also presents a considerable obstacle. Motion artifacts, muscle activity, and environmental interference often distort the signal, reducing its discriminative power. The MFB-CNN model \cite{Lee2020MFB_CNN_PilotMentalStates}, implemented in a simulated flight environment, required extensive preprocessing using Independent Component Analysis (ICA) to remove motion artifacts and eye-blink interference. Although such preprocessing improves signal quality, it significantly increases computational cost and limits real-time applicability.
 
-\subsection*{Inter-Subject Variability}
-EEG signals exhibit high inter-subject variability, meaning that brainwave patterns associated with the same emotion can differ dramatically from one person to another \cite{b7}. This variability stems from anatomical differences (e.g., skull thickness), electrode placement, and individual differences in emotional expression and regulation. This makes it extremely difficult to build generalized, subject-independent models that perform well on new users without a calibration phase. Most high-performing models reported in the literature are subject-dependent, meaning they are trained and tested on data from the same individual, which limits their practical applicability.
+Another persistent issue concerns the lack of methodological standardization across studies. Different research groups employ heterogeneous pipelines—ranging from CWT-CNN-SVM hybrids \cite{Bagherzadeh2023HybridEEGWaveletCNN_SVM} and CNN-LSTM frameworks \cite{Chakravarthi2022EEGHybridCNNLSTM} to MFB-CNN architectures \cite{Lee2020MFB_CNN_PilotMentalStates} and neuromorphic SNN models \cite{Luo2020SNN_EEGEmotion}. Each approach uses distinct preprocessing protocols, feature extraction strategies, and evaluation metrics, complicating the comparison of results across studies. This fragmentation hinders the establishment of consistent benchmarks and slows the development of reproducible EEG-based emotion recognition systems.
 
-\subsection*{Lack of Standardization}
-The field suffers from a lack of standardization in experimental protocols, signal processing pipelines, and evaluation metrics \cite{b6}. Different studies use different emotional models (e.g., discrete emotions vs. valence-arousal), stimuli for emotion elicitation (e.g., images, videos, music), and EEG recording hardware. This heterogeneity makes it nearly impossible to directly compare the performance of different models and approaches reported in the literature. A more standardized framework for data collection and benchmarking is crucial for driving reproducible research and measuring true progress in the field.
+The computational complexity of deep learning models presents another difficulty. Architectures employing large backbones such as ResNet-152 \cite{Chakravarthi2022EEGHybridCNNLSTM} provide high accuracy but demand substantial computational resources for both training and inference. This constraint poses limitations for deployment in portable or embedded devices intended for continuous emotion monitoring. Spiking Neural Networks (SNNs) \cite{Luo2020SNN_EEGEmotion} have emerged as an energy-efficient alternative, yet they currently involve trade-offs between efficiency and precision, creating challenges in maintaining accuracy under low-power operation.
 
-\subsection*{Computational Complexity and Real-Time Constraints}
-Many of the state-of-the-art hybrid models, such as the CNN-LSTM architectures discussed, are computationally intensive \cite{b2}. They require significant computational resources for both training and inference. This high complexity poses a major barrier to their deployment in real-time applications, especially on resource-constrained platforms like wearable devices or mobile phones. The challenge lies in designing models that are both highly accurate and computationally efficient, achieving a balance between performance and practical feasibility.
+The scarcity and inconsistency of EEG datasets further constrain progress. Existing datasets differ in sampling rates, channel configurations, and labeling conventions, making cross-dataset evaluation and model transferability difficult. Data collection is resource-intensive and sensitive to subject-specific conditions, which restricts the availability of large, standardized datasets for robust training. Addressing these issues requires coordinated standardization of acquisition protocols, optimized preprocessing pipelines, and the design of computationally efficient models capable of operating under real-world variability.
+
 
 \section{Solution}
-The research community is actively developing innovative solutions to address the aforementioned challenges. The review papers point towards several promising directions that are shaping the future of EEG-based emotion recognition.
+To address high inter-subject variability and improve generalization across individuals, use subject-independent evaluation by default and report Leave-One-Subject-Out Cross-Validation, as done in the continuous wavelet transform plus convolutional neural network plus support vector machine study \cite{Bagherzadeh2023HybridEEGWaveletCNN_SVM}. Stabilize inputs with per-recording normalization and fixed, overlapping windowing before feature construction. When a simple baseline is needed, include entropy-based features that depend on distributional properties rather than absolute amplitudes to reduce sensitivity to subject scale differences \cite{Patel2021EEGEntropyReview}. For time–frequency image pipelines, aggregate channels into consistent regional groupings and use early convolutional features with a lightweight classifier, which showed better cross-subject behavior than deeper end-to-end settings in \cite{Bagherzadeh2023HybridEEGWaveletCNN_SVM}.
 
-\subsection*{Data Augmentation and Synthesis}
-To combat the problem of data scarcity, researchers are increasingly turning to data augmentation and synthesis techniques. Generative Adversarial Networks (GANs) have shown particular promise in generating synthetic EEG data that mimics the statistical properties of real signals \cite{b8}. These synthetic signals can be used to augment existing datasets, allowing for the training of more robust and generalizable deep learning models without the prohibitive cost of collecting new data. Other augmentation techniques include adding noise, transforming signals in the time or frequency domain, and creating new samples by mixing existing ones.
+To reduce the impact of noise and non-stationarity, keep a short, repeatable preprocessing chain: task-appropriate band-pass, mains notch, fixed segmentation, and artifact removal when present. Independent Component Analysis should be applied when ocular or motion artifacts are visible; it was necessary for reliable operation in the multiple feature block–based convolutional neural network pilot study \cite{Lee2020MFB_CNN_PilotMentalStates}. For feature formation, use continuous wavelet transform scalograms to capture transient content for image-based models \cite{Bagherzadeh2023HybridEEGWaveletCNN_SVM} and entropy measures such as sample entropy, permutation entropy, and differential entropy to summarize irregularity in engineered-feature pipelines \cite{Patel2021EEGEntropyReview}.
 
-\subsection*{Domain Adaptation and Transfer Learning}
-To tackle inter-subject variability, domain adaptation and transfer learning techniques are being actively explored \cite{b7}. The core idea is to adapt a model trained on a large source domain (e.g., a public dataset or a group of subjects) to a new target domain (e.g., a new user) with minimal labeled data. Transfer learning, particularly using pre-trained models from other domains (like the ResNet architecture from computer vision \cite{b1}), allows models to leverage knowledge learned from vast datasets, which can then be fine-tuned for the specific task of EEG classification. These methods aim to reduce the need for extensive subject-specific calibration, making models more practical for real-world use.
+To limit methodological fragmentation and make results comparable, lock a single protocol and report it completely: channel montage and reference, sampling rate, exact filter bands and notch frequency, window length and hop, whether Independent Component Analysis was used, the precise wavelet family and scales for continuous wavelet transform, and the exact definitions and parameters for each entropy measure. State clearly whether results are within-subject or cross-subject, and match the evaluation style of the main pipelines you are citing (for example, LOSO for \cite{Bagherzadeh2023HybridEEGWaveletCNN_SVM} and \cite{Lee2020MFB_CNN_PilotMentalStates}, sequence evaluation for \cite{Chakravarthi2022EEGHybridCNNLSTM}).
 
-\subsection*{Lightweight and Real-Time Models}
-Addressing the challenge of computational complexity is crucial for real-time applications. There is a growing focus on developing lightweight neural network architectures. Techniques such as model pruning (removing redundant connections), quantization (using lower-precision arithmetic), and knowledge distillation (training a smaller model to mimic a larger, more complex one) are being employed. The goal is to create models that can run efficiently on devices with limited computational power, such as wearables and smartphones, without a significant drop in accuracy. This would enable continuous emotion monitoring in everyday life.
+To manage computational complexity, replace very large backbones with compact alternatives or tap early convolutional layers and classify with a lightweight model. The wavelet plus convolutional neural network plus support vector machine pipeline in \cite{Bagherzadeh2023HybridEEGWaveletCNN_SVM} showed that early-layer features with a multiclass support vector machine can outperform deeper end-to-end models while reducing training and inference cost. In the convolutional neural network plus long short-term memory setting \cite{Chakravarthi2022EEGHybridCNNLSTM}, keep the convolutional front-end and the recurrent depth minimal and limit input resolution and sequence length to what is needed for accuracy. For low-power targets, use engineered features such as discrete wavelet transform, fast Fourier transform, and time-domain variance with a spiking neural network; the neuromorphic approach in \cite{Luo2020SNN_EEGEmotion} reached competitive accuracy with a lower compute budget than conventional deep models.
 
-\subsection*{Multimodal Fusion}
-Recognizing that EEG provides only one view into a person\'s emotional state, researchers are exploring multimodal fusion. This approach involves combining EEG data with other physiological signals such as electrocardiography (ECG), galvanic skin response (GSR), and electromyography (EMG), or with behavioral cues like facial expressions and speech prosody \cite{b6, b8}. By integrating information from multiple sources, these systems can create a more holistic and accurate representation of emotion. The challenge lies in developing effective fusion strategies that can synergistically combine these heterogeneous data streams.
-
+To work around dataset scarcity and inconsistency, choose one primary dataset for all headline comparisons and resample any secondary datasets to a common sampling rate with a consistent reference montage before training. Map labels to a common scheme when definitions differ. Increase effective data volume using overlapping windows and balanced sampling across classes; these practices are standard in the hybrid pipelines of \cite{Bagherzadeh2023HybridEEGWaveletCNN_SVM,Chakravarthi2022EEGHybridCNNLSTM}. For continuous monitoring scenarios, keep the same sliding-window and pseudo-online evaluation used during development so that deployment conditions match validation, as in \cite{Lee2020MFB_CNN_PilotMentalStates}.
 \section{Conclusion}
 This review has synthesized the prevailing methodologies, challenges, and solutions in the field of EEG-based emotion recognition, based on literature published between 2022 and 2025. The findings show a clear and consistent trend: the deep integration of advanced DSP techniques with powerful machine learning models. The most successful approaches, such as transforming 1D EEG signals into 2D time-frequency representations for CNN analysis or using hybrid CNN-LSTM architectures to capture spatio-temporal dynamics, have become central to modern research and are pushing the boundaries of classification accuracy.
 
@@ -312,15 +334,9 @@ In response, the research community is pursuing a multi-pronged strategy. To com
 
 In essence, the field is in a dynamic cycle of innovation where the solutions to today\'s challenges—such as data synthesis and model optimization—will form the core of tomorrow\'s more advanced methodologies. The convergence of sophisticated DSP and hybrid machine learning models represents the current frontier, paving the way for the next generation of systems that can reliably and ethically interpret human emotional states in real-time.
 
-\begin{thebibliography}{00}
-\bibitem{b1} N. Bagherzadeh et al., ``A Hybrid EEG-Based Emotion Recognition Approach Using Wavelet Convolutional Neural Networks and Support Vector Machine,'' \textit{Frontiers in Neuroscience}, 2023.
-\bibitem{b2} S. Xu et al., ``EEG-based emotion recognition using hybrid CNN and LSTM networks,'' \textit{Frontiers in Computational Neuroscience}, 2022.
-\bibitem{b3} A. Al-Nafjan et al., ``EEG-based human emotion recognition using entropy as a feature extraction measure,'' \textit{BioMedical Engineering OnLine}, vol. 20, no. 1, 2021.
-\bibitem{b4} P. Zhang et al., ``Continuous EEG Decoding of Pilots’ Mental States Using Multiple Feature Block-Based Convolutional Neural Network,'' \textit{IEEE Transactions on Industrial Informatics}, vol. 17, no. 5, pp. 3695-3704, 2021.
-\bibitem{b5} J. Paredes et al., ``EEG-Based Emotion Classification Using Spiking Neural Networks,'' \textit{IEEE Transactions on Affective Computing}, vol. 13, no. 4, pp. 1895-1908, 2022.
-\bibitem{b6} H. A. Hamzah and K. K. Abdalla, ``EEG-based emotion recognition systems: Comprehensive study,'' \textit{Heliyon}, vol. 10, no. 5, 2024.
-\bibitem{b7} X. Wang et al., ``Deep learning-based EEG emotion recognition: Current trends and future perspectives,'' \textit{Frontiers in Psychology}, 2023.
-\bibitem{b8} Y. Chen et al., ``Advances in EEG-based emotion recognition: Challenges, paradigms, and future directions,'' \textit{Applied Soft Computing}, vol. 150, 2025.
-\end{thebibliography}
+
+\bibliographystyle{IEEEtran}
+\bibliography{BajuyoLoquinteDionsay_Lit_Rev_Ref}
+
 
 \end{document}
